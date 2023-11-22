@@ -14,6 +14,7 @@ fProfile(profile)
     SetProfileFunctions();
     (this->*ComputeAverageRadius)();
     GenerateNucleons();
+    FillGraph();
 }
 
 Nucleus::~Nucleus()
@@ -38,22 +39,11 @@ void Nucleus::Draw()
 {
     TCanvas* canvas = new TCanvas("canvas", "Nucleus Scatter Plot", 800, 600);
     canvas->DrawFrame(-20, -20, 20, 20);
-    TGraph* graph = new TGraph(fNucleons.size());
 
-    for (std::vector<Nucleon>::size_type i = 0; i < fNucleons.size(); i++)
-        graph->SetPoint(i, fNucleons[i].GetX(), fNucleons[i].GetY());
-
-    graph->SetTitle("Nucleus Scatter Plot");
-    graph->GetXaxis()->SetTitle("X");
-    graph->GetYaxis()->SetTitle("Y");
-    graph->SetMarkerStyle(kFullCircle);
-    graph->SetMarkerSize(1);
-
-    graph->Draw("P,same");
+    fGraph->Draw("P,same");
 
     canvas->Update();
     canvas->SaveAs("nucleus_scatter_plot.png");
 
-    delete graph;
     delete canvas;
 }

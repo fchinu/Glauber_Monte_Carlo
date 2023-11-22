@@ -11,9 +11,9 @@
 #include "TMath.h"
 #include "TCanvas.h"
 #include "TGraph.h"
-#include "TH1D.h"
 #include "TF1.h"
 #include "TRandom3.h"
+#include "TAxis.h"
 
 // enumeration for the nucleus radius profile
 enum NucleusRadiusProfile {UNIFORM, WOOD_SAXON};    //TODO: add more profiles
@@ -98,6 +98,8 @@ public:
      */
     void Draw();
 
+    TGraph* GetGraph() { return (TGraph*)fGraph->Clone(); }
+
 private:
     int fA;                         ///< The number of nucleons in the nucleus.
     double fX;                      ///< The x-coordinate of the nucleus.
@@ -107,6 +109,7 @@ private:
     NucleusRadiusProfile fProfile;  ///< The profile of the nucleus radius.
     std::vector<Nucleon> fNucleons; ///< The nucleons in the nucleus.
     TF1* fWoodSaxon;                ///< The Wood-Saxon function.
+    TGraph *fGraph;                 ///< The graph of the nucleus.
 
 
     double (Nucleus::*GetRadiusRndm)() = &Nucleus::GetWoodSaxonRadius;
@@ -182,6 +185,22 @@ private:
             gRandom->Circle(fX, fY, r);
             fNucleons.push_back(Nucleon(fX, fY));
         }
+    }
+
+    /**
+     * @brief Fill the graph of the nucleus.
+     */
+    void FillGraph()
+    {
+        fGraph = new TGraph(fNucleons.size());
+        for (std::vector<Nucleon>::size_type i = 0; i < fNucleons.size(); i++)
+            fGraph->SetPoint(i, fNucleons[i].GetX(), fNucleons[i].GetY());
+
+        fGraph->SetTitle("Nucleus Scatter Plot");
+        fGraph->GetXaxis()->SetTitle("X");
+        fGraph->GetYaxis()->SetTitle("Y");
+        fGraph->SetMarkerStyle(kFullCircle);
+        fGraph->SetMarkerSize(1);
     }
 };
 
