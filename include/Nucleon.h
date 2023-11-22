@@ -7,6 +7,7 @@
 #define NUCLEON_H
 
 #include <iostream>
+#include "TMath.h"
 
 class Nucleon
 {
@@ -16,6 +17,10 @@ public:
 
     double GetX() {return fX;}
     double GetY() {return fY;}
+    bool IsWounded() {return fIsWounded;}
+    int GetNcoll() {return fNcoll;}
+
+    void Collide(Nucleon nucleon, double sigmaNN);
 
     void SetX(double x) {fX = x;}
     void SetY(double y) {fY = y;}
@@ -25,6 +30,8 @@ public:
 private:
     double fX;
     double fY;
+    bool fIsWounded;
+    int fNcoll;
 };
 
 

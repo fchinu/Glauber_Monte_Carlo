@@ -8,7 +8,6 @@
 
 #include <vector>
 #include "Nucleon.h"
-#include "TMath.h"
 #include "TCanvas.h"
 #include "TGraph.h"
 #include "TF1.h"
@@ -37,6 +36,25 @@ public:
      * @brief Destructor for the Nucleus class.
      */
     ~Nucleus();
+
+    /**
+     * @brief Simulate the collision between the two nuclei.
+     * @param nucleon The nucleon to collide with.
+     * @param sigmaNN The nucleon-nucleon cross section.
+     */
+    void Collide(Nucleus nucleus, double sigmaNN);
+
+    /**
+     * @brief Get the Npart of the nucleus.
+     * @return The Npart of the nucleus.
+     */
+    int GetNpart();
+
+    /**
+     * @brief Get the Ncoll of the nucleus.
+     * @return The Ncoll of the nucleus.
+     */
+    int GetNcoll();
 
     /**
      * @brief Get the number of nucleons in the nucleus.
@@ -152,7 +170,6 @@ private:
         fThickness = 0.54;
         fWoodSaxon = new TF1("fWoodSaxon", "[0]/(1+exp((x-[1])/[2]))", 0, 50);
         fWoodSaxon->SetParameters(0.16, fAvRadius, fThickness);
-        fWoodSaxon->Draw();
     }
 
     /**

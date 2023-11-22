@@ -22,7 +22,8 @@ void Run(TString myopt="")
     gSystem->CompileMacro("src/Nucleus.cpp",opt.Data(),"","build");
     gSystem->CompileMacro("src/Event.cpp",opt.Data(),"","build");
 
-    gROOT->ProcessLine("Event a(208, CollisionsProfile::UNIFORM, 10)");
+    gROOT->ProcessLine("Event a(208, CollisionsProfile::UNIFORM, 6, 10)");
+    gROOT->ProcessLine("a.Collision()");
     gROOT->ProcessLine("a.Print()");
     //gROOT->ProcessLine("a.Draw()");
 }

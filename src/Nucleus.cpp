@@ -47,3 +47,33 @@ void Nucleus::Draw()
 
     delete canvas;
 }
+
+void Nucleus::Collide(Nucleus nucleus, double sigmaNN)
+{
+    for (int i=0; i<fA; i++)
+    {
+        for (int j=0; j<nucleus.GetNucleons(); j++)
+        {
+            fNucleons[i].Collide(nucleus.GetNucleon(j), sigmaNN);
+        }
+    }
+}
+
+int Nucleus::GetNpart()
+{
+    int Npart = 0;
+    for (int i=0; i<fA; i++)
+        if (fNucleons[i].IsWounded())
+            Npart++;
+
+    return Npart;
+}
+
+int Nucleus::GetNcoll()
+{
+    int Ncoll = 0;
+    for (int i=0; i<fA; i++)
+        Ncoll += fNucleons[i].GetNcoll();
+
+    return Ncoll;
+}
