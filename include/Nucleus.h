@@ -16,7 +16,7 @@
 #include "TAxis.h"
 
 // enumeration for the nucleus radius profile
-enum NucleusRadiusProfile {UNIFORM, WOOD_SAXON};    //TODO: add more profiles
+enum class NucleusRadiusProfile {UNIFORM, WOOD_SAXON};    //TODO: add more profiles
 
 class Nucleus
 /**
@@ -122,11 +122,11 @@ private:
     {
         switch (fProfile)
         {
-            case UNIFORM:
+            case NucleusRadiusProfile::UNIFORM:
                 this->GetRadiusRndm = &Nucleus::GetUniformRadius;
                 this->ComputeAverageRadius = &Nucleus::ComputeAverageRadiusUniform;
                 break;
-            case WOOD_SAXON:
+            case NucleusRadiusProfile::WOOD_SAXON:
                 this->GetRadiusRndm = &Nucleus::GetWoodSaxonRadius;
                 this->ComputeAverageRadius = &Nucleus::ComputeAverageRadiusWoodSaxon;
                 break;
@@ -181,9 +181,9 @@ private:
         for (int i = 0; i < fA; i++)
         {
             double r = (this->*GetRadiusRndm)();
-            //double z;
-            gRandom->Circle(fX, fY, r);
-            fNucleons.push_back(Nucleon(fX, fY));
+            double x, y, z;
+            gRandom->Sphere(x, y, z, r);
+            fNucleons.push_back(Nucleon(fX + x, fY + y));
         }
     }
 
