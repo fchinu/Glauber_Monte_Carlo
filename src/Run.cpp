@@ -20,8 +20,9 @@ void Run(TString myopt="")
         gSystem->Exec("./clean.sh");
     gSystem->CompileMacro("src/Nucleon.cpp",opt.Data(),"","build");
     gSystem->CompileMacro("src/Nucleus.cpp",opt.Data(),"","build");
+    gSystem->CompileMacro("src/Event.cpp",opt.Data(),"","build");
 
-    gROOT->ProcessLine("Nucleus a(208,5,6, WOOD_SAXON)");
+    gROOT->ProcessLine("Event a(208, CollisionsProfile::UNIFORM, 10)");
     gROOT->ProcessLine("a.Print()");
-    gROOT->ProcessLine("a.Draw()");
+    //gROOT->ProcessLine("a.Draw()");
 }
