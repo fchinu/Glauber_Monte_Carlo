@@ -21,7 +21,7 @@ fNcoll(0)
 
 void Nucleon::Collide(Nucleon nucleon, double sigmaNN)
 {
-    double b = TMath::Sqrt(TMath::Power(fX - nucleon.GetX(), 2) + pow(fY - nucleon.GetY(), 2));
+    double b = TMath::Sqrt(TMath::Power(fX - nucleon.GetX(), 2) + TMath::Power(fY - nucleon.GetY(), 2));
     if (b < TMath::Sqrt(sigmaNN/TMath::Pi()))
     {
         fIsWounded = true;

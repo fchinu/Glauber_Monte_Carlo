@@ -168,7 +168,7 @@ private:
     {
         fAvRadius = 1.12 * TMath::Power(fA, 1.0/3.0) - 0.86 * TMath::Power(fA, -1.0/3.0);
         fThickness = 0.54;
-        fWoodSaxon = new TF1("fWoodSaxon", "[0]/(1+exp((x-[1])/[2]))", 0, 50);
+        fWoodSaxon = new TF1("fWoodSaxon", "x*x*[0]/(1+exp((x-[1])/[2]))", 0, 50);
         fWoodSaxon->SetParameters(0.16, fAvRadius, fThickness);
     }
 
@@ -187,7 +187,7 @@ private:
      */
     double GetUniformRadius()
     {
-        return (gRandom->Rndm()*fAvRadius);
+        return (TMath::Power(gRandom->Rndm(), 1/3.)*fAvRadius);
     }
 
     /**
@@ -219,6 +219,8 @@ private:
         fGraph->SetMarkerStyle(kFullCircle);
         fGraph->SetMarkerSize(1);
     }
+
+    void DrawCollision(int i, Nucleus nucleus, double sigmaNN);
 };
 
 #endif

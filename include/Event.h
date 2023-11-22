@@ -23,7 +23,12 @@ public:
      * @param r The impact parameter.
      * @param radiusProfile The nucleus radius profile.
      */
-    Event(int A, CollisionsProfile profile, double SigmaNN=6, double r = 10, NucleusRadiusProfile radiusProfile = NucleusRadiusProfile::WOOD_SAXON);
+    Event(int A, CollisionsProfile profile, double SigmaNN=6, double r = 10, NucleusRadiusProfile radiusProfile = NucleusRadiusProfile::UNIFORM);
+
+    /**
+     * @brief Destructor for the Event class.
+     */
+    ~Event();
 
     /**
      * @brief Returns the first nucleus involved in the event.
@@ -48,6 +53,12 @@ public:
      * @param nucleus2 A pointer to the second nucleus.
      */
     void SetNucleus2(Nucleus *nucleus2) {fNucleus2 = nucleus2;}
+
+    /**
+     * @brief Returns the distance between the two nuclei.
+     * @return The distance between the two nuclei.
+     */
+    double GetDistance();
 
     /**
      * @brief Performs the collision between the two nuclei.

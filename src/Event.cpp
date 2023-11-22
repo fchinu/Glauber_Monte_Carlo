@@ -16,13 +16,21 @@ fRadiusProfile(radiusProfile)
     (this->*GenerateNuclei)();
 }
 
+Event::~Event()
+{
+    delete fNucleus1;
+    delete fNucleus2;
+}
+
 /**
  * @brief Generate the nuclei with uniform distribution.
  */
 void Event::GenerateNucleiUniform()
 {
     fNucleus1 = new Nucleus(fA, 0, 0, fRadiusProfile);
-    fNucleus2 = new Nucleus(fA, gRandom->Rndm()*fR - fR/2, gRandom->Rndm()*fR - fR/2, fRadiusProfile);
+    double cos,sin;
+    gRandom->Circle(cos, sin, 1);
+    fNucleus2 = new Nucleus(fA, TMath::Power(gRandom->Rndm(),1/2.)*fR * cos, TMath::Power(gRandom->Rndm(),1/2.)*fR * sin, fRadiusProfile);
 }
 
 /**
@@ -30,8 +38,8 @@ void Event::GenerateNucleiUniform()
  */
 void Event::GenerateNucleiGaussian()
 {
-    fNucleus1 = new Nucleus(fA, 0, 0, NucleusRadiusProfile::WOOD_SAXON);
-    fNucleus2 = new Nucleus(fA, gRandom->Gaus(0, fR), gRandom->Gaus(0, fR), NucleusRadiusProfile::WOOD_SAXON);
+    fNucleus1 = new Nucleus(fA, 0, 0, fRadiusProfile);
+    fNucleus2 = new Nucleus(fA, gRandom->Gaus(0, fR), gRandom->Gaus(0, fR), fRadiusProfile);
 }
 
 /**
@@ -84,10 +92,7 @@ int Event::GetNpart()
 
 int Event::GetNcoll()
 {
-    int Ncoll = 0;
-    Ncoll += fNucleus1->GetNcoll();
-    Ncoll += fNucleus2->GetNcoll();
-    return Ncoll;
+    return fNucleus2->GetNcoll();
 }
 
 void Event::SetProfileFunctions()
@@ -101,4 +106,9 @@ void Event::SetProfileFunctions()
             this->GenerateNuclei = &Event::GenerateNucleiGaussian;
             break;
     }
+}
+
+double Event::GetDistance()
+{
+    return TMath::Sqrt(TMath::Power(fNucleus1->GetX() - fNucleus2->GetX(), 2) + TMath::Power(fNucleus1->GetY() - fNucleus2->GetY(), 2));
 }

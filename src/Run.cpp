@@ -21,9 +21,10 @@ void Run(TString myopt="")
     gSystem->CompileMacro("src/Nucleon.cpp",opt.Data(),"","build");
     gSystem->CompileMacro("src/Nucleus.cpp",opt.Data(),"","build");
     gSystem->CompileMacro("src/Event.cpp",opt.Data(),"","build");
+    gSystem->CompileMacro("src/RunMCSimulation.cpp",opt.Data(),"","build");
 
-    gROOT->ProcessLine("Event a(208, CollisionsProfile::UNIFORM, 6, 10)");
-    gROOT->ProcessLine("a.Collision()");
-    gROOT->ProcessLine("a.Print()");
+    gROOT->ProcessLine("RunMCSimulation(208, 6, 5, 1000, NucleusRadiusProfile::WOOD_SAXON, CollisionsProfile::GAUSSIAN)");
+    //gROOT->ProcessLine("a.Collision()");
+    //gROOT->ProcessLine("a.Print()");
     //gROOT->ProcessLine("a.Draw()");
 }
