@@ -50,6 +50,15 @@ void Event::Draw()
     TCanvas *c = new TCanvas("c", "c", 800, 800);
     c->DrawFrame(-20,-20,20,20);
 
+    DrawHere(c);
+
+    c->SaveAs("event.png");
+}
+
+void Event::DrawHere(TCanvas *c)
+{
+    c->cd();
+
     TGraph* gNucleus1 = fNucleus1->GetGraph();
     TGraph* gNucleus2 = fNucleus2->GetGraph();
     gNucleus1->SetMarkerStyle(kFullCircle);
@@ -61,8 +70,8 @@ void Event::Draw()
     gNucleus1->Draw("P,same");
     gNucleus2->Draw("P,same");
 
-    c->SaveAs("event.png");
 }
+
 
 void Event::Print(int verbose)
 {

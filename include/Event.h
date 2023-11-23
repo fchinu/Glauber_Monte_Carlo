@@ -43,6 +43,17 @@ public:
     Nucleus *GetNucleus2() {return fNucleus2;}
 
     /**
+     * @brief Getter for the 2 nuclei graphs.
+     * @param gNucleus1 The graph of the first nucleus.
+     * @param gNucleus2 The graph of the second nucleus.
+     */
+    void GetEventGraphs(TGraph *gNucleus1, TGraph *gNucleus2)
+    {
+        gNucleus1 = fNucleus1->GetGraph();
+        gNucleus2 = fNucleus2->GetGraph();
+    }
+
+    /**
      * @brief Sets the first nucleus involved in the event.
      * @param nucleus1 A pointer to the first nucleus.
      */
@@ -86,6 +97,11 @@ public:
      * @brief Draws a visualization of the event.
      */
     void Draw();
+
+    /**
+     * @brief Draws a visualization of the event in the selected canvas.
+     */
+    void DrawHere(TCanvas *c);
 
 private:
     int fA; // The atomic number of the nucleus.
